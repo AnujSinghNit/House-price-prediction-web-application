@@ -14,6 +14,93 @@ The project should include:
 - Model training and persistence
 - Input validation and error handling
 
+## Objective
+
+Define the primary goal of the project, success criteria, and measurable targets.
+
+- Goal: Build a production-ready full-stack house price prediction web application.
+- Success Criteria: Working Flask API, trained ML model persisted to disk, responsive frontend, prediction history persisted in SQLite, and reproducible setup steps.
+- Measurable Targets: Achieve R2 >= 0.85 on a held-out test set; handle at least 100 concurrent requests with graceful degradation; enforce a max history of 100 entries per the database constraint.
+
+## Input / Output
+
+Input schema (JSON) for prediction requests:
+
+- `square_footage` (int): 500 - 10000
+- `bedrooms` (int): 1 - 10
+- `bathrooms` (int): 1 - 6
+- `location` (str): one of ["Downtown", "Suburban", "Rural", "Urban", "Waterfront"]
+- `year_built` (int): 1900 - 2026
+- `garage` (bool)
+
+Output envelope (JSON):
+
+```json
+{
+  "success": true,
+  "data": {
+    "predicted_price": 123456.78,
+    "formatted_price": "$123,456.78",
+    "input": { /* original input */ },
+    "timestamp": "2026-05-26T12:34:56Z"
+  },
+  "error": null
+}
+```
+
+## Contracts
+
+API contracts and shapes:
+
+- `GET /api/health` -> `{ success, data: { status, model_loaded, uptime, metrics }, error }`
+- `POST /api/predict` -> Accepts the input schema above; returns the standard output envelope with `data.predicted_price`, `data.formatted_price`, `data.input`, and `data.timestamp`.
+- `GET /api/history?limit=&offset=` -> Returns paginated history: `{ success, data: { items: [...], total, limit, offset }, error }`
+
+All endpoints return `400` for validation errors with `{ success: false, data: null, error: { message, details? } }` and `500` for unexpected server errors.
+
+## Data
+
+- Primary dataset: synthetic housing dataset (generate when no model exists) with at least 10,000 samples.
+- Fields: square_footage, bedrooms, bathrooms, location, year_built, garage, sale_price.
+- Storage: CSV during development; SQLite for prediction history; `joblib` for model artifacts.
+
+## Data Preprocessing
+
+- Impute or reject missing values according to strict validation rules.
+- Clip numeric features to allowed ranges.
+- Engineer derived features if beneficial (e.g., `age = current_year - year_built`).
+- Use `ColumnTransformer` to apply `StandardScaler` to numeric features and `OneHotEncoder` to `location`.
+- Train/test split (e.g., 80/20) with a fixed random seed for reproducibility.
+
+## Performance & Scalability
+
+- Load the trained model once at application startup; avoid retraining on requests.
+- Use gunicorn or a WSGI server in production behind a reverse proxy.
+- Add caching for frequent identical predictions if necessary.
+- SQLite is acceptable for local/small-scale use; for higher scale, migrate to Postgres or another RDBMS.
+- Baseline concurrency target: handle 100 simultaneous requests with graceful degradation (queueing, rate limiting).
+
+## Constraints
+
+- Model must achieve R2 >= 0.85 on a held-out test set.
+- Minimum dataset size: 10,000 samples when generating synthetic data.
+- Prediction input ranges and allowed location values are enforced.
+- Prediction history capped at 100 entries; oldest entries are purged when the limit is reached.
+
+## Error Handling
+
+- Validate request JSON; return `400` with structured error details on validation failure.
+- Return `422` for semantically invalid requests when appropriate.
+- Catch unexpected exceptions and return `500` with a generic error message; never expose raw stack traces.
+- Handle database errors gracefully; on transient DB failures, return `503` with retry-friendly messages.
+
+## Output
+
+- Primary output: `data.predicted_price` (float) and `data.formatted_price` (string).
+- Include the original sanitized `data.input` in responses for reproducibility.
+- Include an ISO 8601 `data.timestamp` for each prediction.
+
+
 ## Tech Stack
 
 - Python
