@@ -1,32 +1,97 @@
-# Domain-Specific Coding Prompt
+# Full-Stack House Price Prediction Web Application
 
-## Task
+## Project Overview
 
-Build a production-quality Python backend for a PropTech house price prediction API. The service will be used by a real estate analytics team to estimate residential property prices, store prediction history, and expose health information for monitoring.
+Build a full-stack House Price Prediction Web Application for a real estate analytics workflow.
 
-The solution must be delivered as executable Python code and should be clear enough for another engineer to run locally.
+The project should include:
 
-## Business Context
+- Clean modern UI
+- Machine learning price prediction
+- REST API backend
+- Prediction dashboard
+- Prediction history storage
+- Model training and persistence
+- Input validation and error handling
 
-Real estate agents need fast preliminary valuations before ordering a formal appraisal. The API should accept structured property information, run a trained machine learning model, return a price estimate, and keep an auditable record of each prediction.
+## Tech Stack
 
-## Functional Requirements
+- Python
+- Flask
+- HTML
+- CSS
+- Vanilla JavaScript
+- scikit-learn
+- pandas
+- numpy
+- joblib
+- SQLite
+- REST APIs
 
-1. Create a Flask REST API with these endpoints:
-   - `GET /api/health`
-   - `POST /api/predict`
-   - `GET /api/history`
-2. Generate a synthetic housing dataset with at least 10,000 samples if no trained model exists.
-3. Train a `GradientBoostingRegressor` inside a scikit-learn `Pipeline`.
-4. Use a `ColumnTransformer` with:
-   - `StandardScaler` for numeric features.
-   - `OneHotEncoder` for categorical location.
-5. Persist the trained model using `joblib`.
-6. Store prediction history in SQLite.
+## Project Structure
 
-## Input Fields
+Create a clear project structure:
 
-`POST /api/predict` must accept JSON with:
+```text
+project-root/
+│
+├── backend/       -> Flask API and ML model logic
+├── frontend/      -> House price prediction web interface
+├── data/          -> Generated dataset or database files
+├── models/        -> Saved ML model files
+└── docs/          -> Setup and usage documentation
+```
+
+For a simplified single-file benchmark version, the backend may be delivered as:
+
+```text
+project-root/
+│
+├── prompt.md
+├── justification.md
+├── golden_response.py
+└── README.md
+```
+
+## FEATURES REQUIRED
+
+### 1. MACHINE LEARNING MODEL
+
+The application should:
+
+- Generate a synthetic housing dataset if no trained model exists
+- Use at least `10,000` samples
+- Train a `GradientBoostingRegressor`
+- Use a scikit-learn `Pipeline`
+- Use a `ColumnTransformer`
+- Apply `StandardScaler` to numeric features
+- Apply `OneHotEncoder` to categorical location data
+- Save the trained model using `joblib`
+- Load the model once when the application starts
+- Print model metrics during startup
+- Achieve an `R2` score of at least `0.85` on a held-out test set
+
+### 2. BACKEND API
+
+Create a Flask REST API with these endpoints:
+
+- `GET /api/health`
+- `POST /api/predict`
+- `GET /api/history`
+
+The backend should:
+
+- Return structured JSON responses
+- Validate all user input
+- Store prediction history
+- Handle malformed JSON
+- Handle unknown routes
+- Handle unexpected server errors
+- Include basic rate limiting for prediction requests
+
+### 3. HOUSE PRICE PREDICTION FORM
+
+The prediction form should accept:
 
 ```json
 {
@@ -39,46 +104,119 @@ Real estate agents need fast preliminary valuations before ordering a formal app
 }
 ```
 
-## Explicit Constraints
+The form should include:
 
-1. Validate all required fields and return HTTP `400` with a descriptive message for missing or invalid input.
-2. Enforce these ranges:
-   - `square_footage`: 500 to 10000
-   - `bedrooms`: 1 to 10
-   - `bathrooms`: 1 to 6
-   - `year_built`: 1900 to 2026
-3. `location` must be one of: `Downtown`, `Suburban`, `Rural`, `Urban`, `Waterfront`.
-4. Load the ML model once at application startup. Do not retrain or reload it per request.
-5. The prediction response must include:
-   - `success`
-   - `data.predicted_price`
-   - `data.formatted_price`
-   - `data.input`
-   - `data.timestamp`
-   - `error`
-6. `GET /api/history` must support `limit` and `offset` query parameters with a maximum limit of 100.
-7. `GET /api/health` must report model load status, uptime, and model metrics.
-8. Include basic rate limiting for the prediction endpoint.
-9. Handle malformed JSON, not-found routes, and unexpected server errors with structured JSON.
-10. The model must achieve an R2 score of at least 0.85 on a held-out test set.
+- Square footage input
+- Bedrooms input
+- Bathrooms input
+- Location dropdown
+- Year built input
+- Garage checkbox or toggle
+- Predict price button
+- Loading state
+- Error messages
+- Predicted price result card
 
-## Technical Requirements
+### 4. INPUT VALIDATION
 
-1. Use only Python standard library plus:
-   - Flask
-   - flask-cors
-   - scikit-learn
-   - pandas
-   - numpy
-   - joblib
-2. Use SQLite with parameterized queries.
-3. Use type hints for public helper functions.
-4. Add docstrings to all public functions.
-5. Keep configuration values near the top of the file.
+Validate all required fields and return HTTP `400` with a descriptive message for invalid input.
 
-## Formatting Requirements
+Required ranges:
 
-1. Return all API responses using this JSON envelope:
+- `square_footage`: `500` to `10000`
+- `bedrooms`: `1` to `10`
+- `bathrooms`: `1` to `6`
+- `year_built`: `1900` to `2026`
+
+Allowed locations:
+
+- `Downtown`
+- `Suburban`
+- `Rural`
+- `Urban`
+- `Waterfront`
+
+### 5. DASHBOARD WEBSITE
+
+Create a modern dashboard interface with:
+
+- Sidebar navigation
+- Dashboard home
+- Price prediction form
+- Prediction result section
+- Total predictions stat
+- Average predicted price stat
+- Recent predictions
+- Location/category insights
+- Model health section
+- Search prediction history
+- Settings page
+- Help/About page
+- Responsive design
+- Dark/light theme toggle
+- Smooth animations
+
+### 6. PREDICTION MANAGEMENT
+
+Users should be able to:
+
+- Submit house details
+- View predicted price
+- View formatted price
+- View original input used for prediction
+- View prediction timestamp
+- Browse prediction history
+- Search history
+- Filter history by location
+- Sort predictions by date or price
+- Clear or manage local UI state
+
+### 7. DATA STORAGE
+
+Store prediction history in SQLite.
+
+The database should:
+
+- Create tables automatically
+- Store each prediction with input values
+- Store predicted price
+- Store timestamp
+- Use parameterized SQL queries
+- Return history from newest to oldest
+- Support pagination with `limit` and `offset`
+- Enforce a maximum history limit of `100`
+
+### 8. FRONTEND API INTEGRATION
+
+The frontend should:
+
+- Call the Flask backend using `fetch`
+- Show loading spinners while requests are running
+- Show toast notifications for success and errors
+- Refresh prediction history after each successful prediction
+- Validate form values before sending requests
+- Display backend validation errors clearly
+- Use a configurable backend API URL
+
+### 9. MODERN UI REQUIREMENTS
+
+UI should look modern and professional:
+
+- Rounded corners
+- Smooth hover effects
+- Soft shadows
+- Clean typography
+- Responsive layout
+- Dashboard cards
+- Clear form spacing
+- Elegant result display
+- Helpful empty states
+- Polished error and loading states
+- Dark/light theme support
+
+### 10. API RESPONSE FORMAT
+
+Return all API responses using this JSON envelope:
 
 ```json
 {
@@ -88,25 +226,163 @@ Real estate agents need fast preliminary valuations before ordering a formal app
 }
 ```
 
-2. Keep the code in a single file named `golden_response.py`.
-3. Use clear section comments so reviewers can quickly navigate the code.
-4. Print model metrics when the application starts.
-5. Include a concise README explaining setup, execution, endpoints, and evaluation methodology.
+The prediction response must include:
 
-## Expected Deliverable
+- `success`
+- `data.predicted_price`
+- `data.formatted_price`
+- `data.input`
+- `data.timestamp`
+- `error`
 
-Submit a repository containing:
+### 11. HEALTH CHECK REQUIREMENTS
 
-- `prompt.md`
-- `justification.md`
-- `golden_response.py`
-- `README.md`
+`GET /api/health` should report:
 
-The repository should allow an evaluator to run:
+- Service status
+- Model load status
+- Uptime
+- Model metrics
+- Current timestamp
 
-```bash
-pip install flask flask-cors scikit-learn pandas numpy joblib
-python golden_response.py
+### 12. FILES TO CREATE
+
+BACKEND:
+
+```text
+backend/
+│
+├── app.py
+├── config.py
+├── model.py
+├── database.py
+├── validation.py
+├── requirements.txt
+└── README.md
 ```
 
-Then test the API at `http://localhost:5000`.
+FRONTEND:
+
+```text
+frontend/
+│
+├── index.html
+├── styles.css
+├── app.js
+├── dashboard.html
+├── settings.html
+└── help.html
+```
+
+SIMPLIFIED BENCHMARK VERSION:
+
+```text
+project-root/
+│
+├── prompt.md
+├── justification.md
+├── golden_response.py
+└── README.md
+```
+
+### 13. SECURITY AND RELIABILITY
+
+The application should include:
+
+- Input validation
+- Basic input sanitization
+- Parameterized SQLite queries
+- CORS setup
+- Structured error handling
+- Basic rate limiting
+- Safe model loading
+- No retraining per request
+- No raw stack traces in API responses
+
+### 14. EXTRA FEATURES
+
+Add useful optional features:
+
+- Export prediction history
+- Clear history button
+- Model metrics visualization
+- Prediction trend chart
+- Location-based average prices
+- Recent activity feed
+- Copy prediction result
+- Print or download estimate
+- Mobile responsive dashboard
+
+### 15. UI DIFFERENCE
+
+The house price prediction app should feel like a modern PropTech analytics tool:
+
+- Use a polished real estate dashboard style
+- Use a different color palette from generic templates
+- Use better spacing and typography
+- Make the prediction result visually prominent
+- Keep charts and stats easy to scan
+- Make the form simple for real estate agents to use quickly
+
+### 16. CODE REQUIREMENTS
+
+Write clean, beginner-friendly, modular code:
+
+- Use clear function names
+- Add helpful comments
+- Use type hints for public helper functions
+- Add docstrings to public functions
+- Keep configuration values near the top
+- Separate API, validation, model, and database logic where possible
+- Use async frontend request handling where appropriate
+- Keep the code easy for another engineer to run locally
+
+### 17. FINAL OUTPUT REQUIRED
+
+Provide:
+
+- Complete project code
+- Folder structure
+- Setup instructions
+- Backend run instructions
+- Frontend run instructions
+- SQLite/database explanation
+- Model training explanation
+- API endpoint documentation
+- Example request and response bodies
+- Evaluation methodology
+- Deployment notes
+
+## DEVELOPMENT FLOW
+
+Build the project step-by-step starting from:
+
+1. Backend setup
+2. Dataset generation
+3. Machine learning pipeline
+4. Model persistence
+5. SQLite prediction history
+6. Prediction API
+7. Health API
+8. History API
+9. Frontend prediction form
+10. Dashboard interface
+11. Frontend and backend integration
+12. Error handling and validation
+13. Final polishing and testing
+
+## FINAL GOAL
+
+The final project should work as a complete production-ready house price prediction web application with:
+
+- Machine learning price prediction
+- Flask REST API
+- Modern responsive dashboard
+- Prediction history
+- SQLite persistence
+- Model metrics
+- Strong validation
+- Structured JSON responses
+- Clear setup documentation
+- Clean maintainable code
+ 
