@@ -58,13 +58,6 @@ Define the primary goal of the project, success criteria, and measurable targets
 - Catch unexpected exceptions and return `500` with a generic error message; never expose raw stack traces.
 - Handle database errors gracefully; on transient DB failures, return `503` with retry-friendly messages.
 
-## Output
-
-- Primary output: `data.predicted_price` (float) and `data.formatted_price` (string).
-- Include the original sanitized `data.input` in responses for reproducibility.
-- Include an ISO 8601 `data.timestamp` for each prediction.
-
-
 ## Tech Stack
 
 - Python — backend language for model training and API development.
