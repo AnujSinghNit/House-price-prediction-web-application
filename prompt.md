@@ -240,21 +240,21 @@ Allowed locations:
 
 Create a modern dashboard interface with:
 
-- Sidebar navigation
-- Dashboard home
-- Price prediction form
-- Prediction result section
-- Total predictions stat
-- Average predicted price stat
-- Recent predictions
-- Location/category insights
-- Model health section
-- Search prediction history
-- Settings page
-- Help/About page
-- Responsive design
-- Dark/light theme toggle
-- Smooth animations
+- Sidebar navigation — lets users switch between dashboard views easily.
+- Dashboard home — provides a central landing page for key stats and controls.
+- Price prediction form — lets users submit house details directly from the dashboard.
+- Prediction result section — displays the estimate without leaving the page.
+- Total predictions stat — summarizes usage volume for quick insights.
+- Average predicted price stat — gives a snapshot of predicted market value.
+- Recent predictions — surfaces the latest prediction activity.
+- Location/category insights — helps users compare results across market segments.
+- Model health section — shows whether the predictive system is functioning properly.
+- Search prediction history — enables finding past estimates quickly.
+- Settings page — offers environment and display configuration options.
+- Help/About page — provides project context and user guidance.
+- Responsive design — makes the dashboard usable on mobile and desktop.
+- Dark/light theme toggle — offers a personalized visual experience.
+- Smooth animations — improves perceived polish and usability.
 
 ### 6. PREDICTION MANAGEMENT
 
@@ -441,48 +441,48 @@ Write clean, beginner-friendly, modular code:
 
 Provide:
 
-- Complete project code
-- Folder structure
-- Setup instructions
-- Backend run instructions
-- Frontend run instructions
-- SQLite/database explanation
-- Model training explanation
-- API endpoint documentation
-- Example request and response bodies
-- Evaluation methodology
-- Deployment notes
+- Complete project code — full source files for the backend, frontend, and supporting scripts.
+- Folder structure — a clear directory layout for the complete application.
+- Setup instructions — how to install dependencies and prepare the project.
+- Backend run instructions — commands to start the Flask API.
+- Frontend run instructions — commands to launch or serve the UI.
+- SQLite/database explanation — details on how prediction history is stored and accessed.
+- Model training explanation — how the ML model is generated, evaluated, and persisted.
+- API endpoint documentation — request/response shapes for each backend route.
+- Example request and response bodies — sample JSON payloads for integration testing.
+- Evaluation methodology — how the model and application success are measured.
+- Deployment notes — guidance for running the application in production.
 
 ## DEVELOPMENT FLOW
 
 Build the project step-by-step starting from:
 
-1. Backend setup
-2. Dataset generation
-3. Machine learning pipeline
-4. Model persistence
-5. SQLite prediction history
-6. Prediction API
-7. Health API
-8. History API
-9. Frontend prediction form
-10. Dashboard interface
-11. Frontend and backend integration
-12. Error handling and validation
-13. Final polishing and testing
+1. Backend setup — establish the Flask app and project dependencies.
+2. Dataset generation — create or load the housing data used for training.
+3. Machine learning pipeline — build preprocessing and regression model logic.
+4. Model persistence — save the trained model artifact for reuse.
+5. SQLite prediction history — set up persistence for past predictions.
+6. Prediction API — add the endpoint that returns model estimates.
+7. Health API — expose service and model health information.
+8. History API — provide paginated access to stored prediction records.
+9. Frontend prediction form — build the user interface for submitting predictions.
+10. Dashboard interface — create the analytics and history view.
+11. Frontend and backend integration — wire UI requests to the Flask API.
+12. Error handling and validation — ensure robustness for bad data and failures.
+13. Final polishing and testing — refine UX and verify the complete experience.
 
 ## FINAL GOAL
 
 The final project should work as a complete production-ready house price prediction web application with:
 
-- Machine learning price prediction
-- Flask REST API
-- Modern responsive dashboard
-- Prediction history
-- SQLite persistence
-- Model metrics
-- Strong validation
-- Structured JSON responses
-- Clear setup documentation
-- Clean maintainable code
+- Machine learning price prediction — deliver actual numeric home-value estimates.
+- Flask REST API — provide the backend service layer for prediction and history.
+- Modern responsive dashboard — present results in a polished, mobile-friendly UI.
+- Prediction history — preserve past estimates for review and auditing.
+- SQLite persistence — store history reliably in a lightweight local database.
+- Model metrics — surface model quality and health information.
+- Strong validation — protect the app from invalid inputs and misuse.
+- Structured JSON responses — ensure consistent API output across endpoints.
+- Clear setup documentation — make it easy for others to install and run the app.
+- Clean maintainable code — keep the codebase readable and easy to extend.
  
