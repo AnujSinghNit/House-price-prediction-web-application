@@ -61,6 +61,16 @@ The backend and frontend must validate each prediction request before processing
 - Requests with missing or invalid fields must return HTTP `400` with a structured `error` payload describing the invalid fields.
 - The frontend should show clear inline validation errors before sending API requests.
 
+## Contracts
+
+API contracts and shapes:
+
+- `GET /api/health` -> `{ success, data: { status, model_loaded, uptime, metrics }, error }`
+- `POST /api/predict` -> Accepts the input schema above; returns the standard output envelope with `data.predicted_price`, `data.formatted_price`, `data.input`, and `data.timestamp`.
+- `GET /api/history?limit=&offset=` -> Returns paginated history: `{ success, data: { items: [...], total, limit, offset }, error }`
+
+All endpoints return `400` for validation errors with `{ success: false, data: null, error: { message, details? } }` and `500` for unexpected server errors.
+
 ## Data
 
 - Primary dataset: synthetic housing dataset (generate when no model exists) with at least 10,000 samples.
