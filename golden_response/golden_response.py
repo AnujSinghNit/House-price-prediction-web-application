@@ -30,10 +30,11 @@ from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
 
 # Configuration
+BASE_DIR = os.path.dirname(__file__)
 APP_HOST = os.getenv("APP_HOST", "0.0.0.0")
 APP_PORT = int(os.getenv("APP_PORT", "5000"))
-DATABASE_PATH = os.getenv("DATABASE_PATH", "predictions.db")
-MODEL_PATH = os.getenv("MODEL_PATH", "house_price_model.joblib")
+DATABASE_PATH = os.getenv("DATABASE_PATH", os.path.join(BASE_DIR, "predictions.db"))
+MODEL_PATH = os.getenv("MODEL_PATH", os.path.join(BASE_DIR, "house_price_model.joblib"))
 RANDOM_SEED = 42
 SAMPLE_COUNT = 10_000
 RATE_LIMIT_REQUESTS = 20
