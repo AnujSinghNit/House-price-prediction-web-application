@@ -6,13 +6,13 @@ Build a full-stack House Price Prediction Web Application for a real estate anal
 
 The project should include:
 
-- Clean modern UI
-- Machine learning price prediction
-- REST API backend
-- Prediction dashboard
-- Prediction history storage
-- Model training and persistence
-- Input validation and error handling
+- Clean modern UI — makes the app easy to use and visually appealing for real estate users.
+- Machine learning price prediction — delivers automated home-value estimates from input features.
+- REST API backend — allows the frontend to request predictions and history from a central service.
+- Prediction dashboard — provides a visual workspace for users to review results and trends.
+- Prediction history storage — preserves past predictions for auditing and comparison.
+- Model training and persistence — creates a reusable trained model that can be loaded without retraining.
+- Input validation and error handling — protects the application from invalid data and improves reliability.
 
 ## Objective
 
@@ -47,6 +47,19 @@ Output envelope (JSON):
   "error": null
 }
 ```
+
+## Input Validation
+
+The backend and frontend must validate each prediction request before processing:
+
+- `square_footage` is required, must be an integer, and must be between `500` and `10000`.
+- `bedrooms` is required, must be an integer, and must be between `1` and `10`.
+- `bathrooms` is required, must be an integer, and must be between `1` and `6`.
+- `location` is required and must be one of: `Downtown`, `Suburban`, `Rural`, `Urban`, `Waterfront`.
+- `year_built` is required, must be an integer, and must be between `1900` and `2026`.
+- `garage` is required and must be a boolean.
+- Requests with missing or invalid fields must return HTTP `400` with a structured `error` payload describing the invalid fields.
+- The frontend should show clear inline validation errors before sending API requests.
 
 ## Contracts
 
@@ -103,17 +116,17 @@ All endpoints return `400` for validation errors with `{ success: false, data: n
 
 ## Tech Stack
 
-- Python
-- Flask
-- HTML
-- CSS
-- Vanilla JavaScript
-- scikit-learn
-- pandas
-- numpy
-- joblib
-- SQLite
-- REST APIs
+- Python — backend language for model training and API development.
+- Flask — web framework used to build the prediction and health endpoints.
+- HTML — structure the frontend pages and form content.
+- CSS — style the dashboard for a modern, responsive experience.
+- Vanilla JavaScript — handle form interaction and API requests from the browser.
+- scikit-learn — build, train, and evaluate the regression model.
+- pandas — load, clean, and prepare the dataset for training and inference.
+- numpy — support numeric operations and feature engineering.
+- joblib — persist the trained model to disk and load it at startup.
+- SQLite — store prediction history locally for fast, lightweight persistence.
+- REST APIs — define the communication contract between frontend and backend.
 
 ## Project Structure
 
