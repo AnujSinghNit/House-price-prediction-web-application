@@ -139,7 +139,10 @@ project-root/
 │
 ├── prompt.md
 ├── justification.md
-├── golden_response.py
+├── golden_response/
+│   ├── golden_response.py
+│   ├── requirements.txt
+│   └── house_price_model.joblib
 └── README.md
 ```
 
@@ -371,7 +374,10 @@ project-root/
 │
 ├── prompt.md
 ├── justification.md
-├── golden_response.py
+├── golden_response/
+│   ├── golden_response.py
+│   ├── requirements.txt
+│   └── house_price_model.joblib
 └── README.md
 ```
 

@@ -14,11 +14,14 @@ The repository is designed for side-by-side evaluation of two model responses us
 .
 +-- prompt.md              # Original domain-specific coding prompt
 +-- justification.md       # Side-by-side evaluation framework
-+-- golden_response.py     # Production-quality reference implementation
++-- golden_response/       # Production-quality reference implementation
+|   +-- golden_response.py
+|   +-- requirements.txt
+|   +-- house_price_model.joblib
 +-- README.md              # Setup, running, and evaluation notes
 ```
 
-The submitted GitHub repository should contain these four required files at the repository root.
+The submitted GitHub repository should contain the prompt, justification, README, and one `golden_response/` folder with the executable code.
 
 ## Requirements
 
@@ -41,6 +44,7 @@ C:\Users\Admin\AppData\Local\Programs\Python\Python312\python.exe
 From the repository root:
 
 ```bash
+cd golden_response
 python golden_response.py
 ```
 
@@ -108,6 +112,7 @@ curl "http://localhost:5000/api/history?limit=10&offset=0"
 Basic runtime checks:
 
 ```bash
+cd golden_response
 python -m py_compile golden_response.py
 python golden_response.py
 ```
@@ -133,7 +138,7 @@ Use `justification.md` to compare two LLM responses against the prompt. The eval
 - Maintainability.
 - Documentation quality.
 
-The file `golden_response.py` acts as the benchmark reference. A submitted response does not need to be identical to it, but it should meet the same explicit constraints and comparable production-quality expectations.
+The file `golden_response/golden_response.py` acts as the benchmark reference. A submitted response does not need to be identical to it, but it should meet the same explicit constraints and comparable production-quality expectations.
 
 ## GitHub Submission
 
@@ -141,7 +146,7 @@ The required final submission should be a GitHub repository containing:
 
 - `prompt.md`
 - `justification.md`
-- `golden_response.py`
+- `golden_response/`
 - `README.md`
 
 After pushing the repository, submit the GitHub repository URL.
